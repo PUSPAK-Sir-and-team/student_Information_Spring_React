@@ -1,0 +1,33 @@
+package com.student.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.student.entity.studentdbEntity;
+import com.student.repository.studentRepository;
+
+@Service
+public class studentService {
+	
+	@Autowired
+	private studentRepository repo;
+	
+	public studentdbEntity addStudent(studentdbEntity entity)
+	{
+		return repo.save(entity);
+	}
+	
+	public List<studentdbEntity> getAllStudents()
+	{
+		return repo.findAll();
+	}
+	
+	public Optional<studentdbEntity> getStudentsByID(int id)
+	{
+		return repo.findById((long) id);
+	}
+
+}

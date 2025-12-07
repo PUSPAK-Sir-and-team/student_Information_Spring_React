@@ -1,0 +1,26 @@
+package com.student.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.student.entity.studentdbEntity;
+import com.student.service.studentService;
+
+@RestController
+@RequestMapping("/api/student")
+
+public class studentController {
+	@Autowired studentService service;
+	
+	@PostMapping
+	
+	public studentdbEntity addStudent(studentdbEntity StudentDBEntity)
+	{
+		return service.addStudent(StudentDBEntity);
+	}
+	
+	
+
+}
