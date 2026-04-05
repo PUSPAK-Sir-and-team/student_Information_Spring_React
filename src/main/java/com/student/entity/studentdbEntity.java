@@ -1,12 +1,19 @@
 package com.student.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,28 +22,33 @@ import jakarta.persistence.Table;
 public class studentdbEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="admin_id")
 	private int adminId;
 	
-    @JsonProperty("admin_name")
+	@Column(name="admin_name")
 	private String adminName;
 	
-    @JsonProperty("admin_email")
+	@Column(name="admin_email")
 	private String adminEmail;
 	
-    @JsonProperty("admin_phno")
+	@Column(name="admin_phno")
 	private long adminPhno;
 	
-    @JsonProperty("admin_img_url")
+	@Column(name="admin_img_url")
 	private String adminImgUrl;
 	
-    @JsonProperty("admin_address")
+	@Column(name="admin_address")
 	private String adminAddress;
 	
-    @JsonProperty("admin_addrproof_type")
+	@Column(name="admin_addrproof_type")
 	private String adminAddrproofType;
 	
-    @JsonProperty("admin_addrproof_num")
+	@Column(name="admin_addrproof_num")
 	private String adminAddrproofNum;
+    
+	@JsonManagedReference
+    @OneToMany(mappedBy = "adminId", cascade = CascadeType.ALL)
+    private List<departmentEntity> department;
 
 	public int getAdminId() {
 		return adminId;
@@ -101,6 +113,16 @@ public class studentdbEntity {
 	public void setAdminAddrproofNum(String adminAddrproofNum) {
 		this.adminAddrproofNum = adminAddrproofNum;
 	}
+
+	public List<departmentEntity> getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(List<departmentEntity> department) {
+		this.department = department;
+	}
+
+	
 	
 	
 }
