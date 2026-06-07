@@ -1,13 +1,13 @@
-package com.student;
+package com.main.admin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StudentInformationApplication {
+public class AdminServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StudentInformationApplication.class, args);
+		SpringApplication.run(AdminServiceApplication.class, args);
 	}
 
 }
