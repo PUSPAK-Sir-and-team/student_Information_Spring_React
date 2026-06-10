@@ -1,9 +1,12 @@
-import flowbiteReact from "flowbite-react/plugin/tailwindcss";
-
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", ".flowbite-react/class-list.json"],
+  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        soft: "0 20px 60px -30px rgb(24 24 27 / 0.45)",
+      },
+    },
   },
-  plugins: [flowbiteReact],
+  plugins: [],
 };
