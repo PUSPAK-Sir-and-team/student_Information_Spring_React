@@ -172,10 +172,15 @@ export function SchoolBoard() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-12">
-                  <Checkbox checked={hasSelectedAll} onChange={toggleSelectedAll} />
+                  <Checkbox
+                    checked={hasSelectedAll}
+                    onChange={toggleSelectedAll}
+                  />
                 </TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead>{activeType === "students" ? "Class" : "Subject"}</TableHead>
+                <TableHead>
+                  {activeType === "students" ? "Class" : "Subject"}
+                </TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Phone</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
@@ -200,7 +205,7 @@ export function SchoolBoard() {
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <img
-                        src={person.imageUrl || DUMMY_AVATAR_URL}
+                        src={DUMMY_AVATAR_URL || person.imageUrl}
                         alt=""
                         className="h-11 w-11 rounded-md border border-zinc-200 object-cover dark:border-zinc-700"
                       />
@@ -209,8 +214,8 @@ export function SchoolBoard() {
                           {person.name}
                         </p>
                         <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
-                          {activeType === "students" ? "Student" : "Teacher"} ID #
-                          {person.id}
+                          {activeType === "students" ? "Student" : "Teacher"} ID
+                          #{person.id}
                         </p>
                       </div>
                     </div>

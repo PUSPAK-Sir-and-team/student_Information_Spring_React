@@ -115,7 +115,9 @@ export function PersonForm() {
               <Input
                 id="name"
                 type="text"
-                placeholder={activeType === "students" ? "Aarav Sharma" : "Meera Nair"}
+                placeholder={
+                  activeType === "students" ? "Aarav Sharma" : "Meera Nair"
+                }
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -181,7 +183,8 @@ export function PersonForm() {
 
           {status === "error" && (
             <p className="mt-4 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700">
-              Could not create the {roleLabel}. Please check the data source and try again.
+              Could not create the {roleLabel}. Please check the data source and
+              try again.
             </p>
           )}
 
@@ -210,13 +213,14 @@ export function PersonForm() {
           </p>
           <div className="mt-6 flex items-center gap-4">
             <img
-              src={formData.imageUrl || DUMMY_AVATAR_URL}
+              src={DUMMY_AVATAR_URL || formData.imageUrl}
               alt=""
               className="h-20 w-20 rounded-md object-cover ring-4 ring-white/10"
             />
             <div className="min-w-0">
               <h3 className="truncate text-2xl font-black">
-                {formData.name || `${roleLabel[0].toUpperCase()}${roleLabel.slice(1)} name`}
+                {formData.name ||
+                  `${roleLabel[0].toUpperCase()}${roleLabel.slice(1)} name`}
               </h3>
               <p className="mt-1 truncate text-sm text-zinc-300 dark:text-zinc-300">
                 {formData.email || "email@school.edu"}
