@@ -103,6 +103,7 @@ function App() {
               <Route path="/" element={<Navigate to="/list" replace />} />
               <Route path="/create" element={<PersonForm />} />
               <Route path="/list" element={<SchoolBoard />} />
+              <Route path="*" element={<Navigate to="/list" replace />} />
             </Routes>
           </main>
         </div>
