@@ -4,6 +4,7 @@ import {
   HiCheck,
   HiOutlineRefresh,
   HiPhotograph,
+  HiShieldCheck,
   HiUserAdd,
   HiUserGroup,
 } from "react-icons/hi";
@@ -19,7 +20,12 @@ const emptyForm = {
   imageUrl: "",
   phone: "",
   detail: "",
+  address: "",
+  addressProof: "",
+  addressProofType: "",
 };
+
+const addressProofTypes = ["Aadhar", "PAN", "Passport", "Voter ID"];
 
 export function PersonForm() {
   const [activeType, setActiveType] = useState("students");
@@ -50,10 +56,23 @@ export function PersonForm() {
     }
   };
 
-  const roleLabel = activeType === "students" ? "student" : "teacher";
-  const detailLabel = activeType === "students" ? "Class / grade" : "Subject";
-  const detailPlaceholder =
-    activeType === "students" ? "Grade 10 - Science" : "Mathematics";
+  const isAdmin = activeType === "admins";
+  const roleLabel =
+    activeType === "students"
+      ? "student"
+      : activeType === "teachers"
+        ? "teacher"
+        : "admin";
+  const detailLabel = isAdmin
+    ? "Address"
+    : activeType === "students"
+      ? "Class / grade"
+      : "Subject";
+  const detailPlaceholder = isAdmin
+    ? "Kolkata"
+    : activeType === "students"
+      ? "Grade 10 - Science"
+      : "Mathematics";
   const hasPreview = formData.name || formData.email || formData.imageUrl;
 
   return (
@@ -64,7 +83,7 @@ export function PersonForm() {
             School profile
           </p>
           <h2 className="mt-2 text-3xl font-black text-zinc-950 dark:text-white sm:text-4xl">
-            Add a {roleLabel}
+            Add {isAdmin ? "an" : "a"} {roleLabel}
           </h2>
         </div>
 
@@ -81,10 +100,11 @@ export function PersonForm() {
           className="rounded-md border border-zinc-200 bg-white p-5 shadow-soft dark:border-zinc-800 dark:bg-zinc-950"
           onSubmit={handleSubmit}
         >
-          <div className="mb-5 grid grid-cols-2 gap-2 rounded-md bg-zinc-100 p-1 dark:bg-zinc-900">
+          <div className="mb-5 grid grid-cols-3 gap-2 rounded-md bg-zinc-100 p-1 dark:bg-zinc-900">
             {[
               { type: "students", label: "Student", icon: HiUserGroup },
               { type: "teachers", label: "Teacher", icon: HiAcademicCap },
+              { type: "admins", label: "Admin", icon: HiShieldCheck },
             ].map((item) => {
               const Icon = item.icon;
 
@@ -168,17 +188,63 @@ export function PersonForm() {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="detail">{detailLabel}</Label>
-              <Input
-                id="detail"
-                type="text"
-                placeholder={detailPlaceholder}
-                required
-                value={formData.detail}
-                onChange={handleChange}
-              />
-            </div>
+            {isAdmin ? (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="address">{detailLabel}</Label>
+                  <Input
+                    id="address"
+                    type="text"
+                    placeholder={detailPlaceholder}
+                    required
+                    value={formData.address}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="addressProof">Address proof number</Label>
+                  <Input
+                    id="addressProof"
+                    type="text"
+                    placeholder="ABCDE1234F"
+                    required
+                    value={formData.addressProof}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="addressProofType">Address proof type</Label>
+                  <select
+                    id="addressProofType"
+                    required
+                    value={formData.addressProofType}
+                    onChange={handleChange}
+                    className="flex h-11 w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-950 shadow-sm outline-none transition focus-visible:ring-2 focus-visible:ring-teal-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white"
+                  >
+                    <option value="">Select a proof type</option>
+                    {addressProofTypes.map((proofType) => (
+                      <option key={proofType} value={proofType}>
+                        {proofType}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </>
+            ) : (
+              <div className="space-y-2">
+                <Label htmlFor="detail">{detailLabel}</Label>
+                <Input
+                  id="detail"
+                  type="text"
+                  placeholder={detailPlaceholder}
+                  required
+                  value={formData.detail}
+                  onChange={handleChange}
+                />
+              </div>
+            )}
           </div>
 
           {status === "error" && (
@@ -213,8 +279,11 @@ export function PersonForm() {
           </p>
           <div className="mt-6 flex items-center gap-4">
             <img
-              src={DUMMY_AVATAR_URL || formData.imageUrl}
+              src={formData.imageUrl || DUMMY_AVATAR_URL}
               alt=""
+              onError={(event) => {
+                event.currentTarget.src = DUMMY_AVATAR_URL;
+              }}
               className="h-20 w-20 rounded-md object-cover ring-4 ring-white/10"
             />
             <div className="min-w-0">
@@ -242,9 +311,26 @@ export function PersonForm() {
                 {detailLabel}
               </p>
               <p className="mt-1 font-semibold">
-                {formData.detail || "Not added yet"}
+                {(isAdmin ? formData.address : formData.detail) ||
+                  "Not added yet"}
               </p>
             </div>
+            {isAdmin && (
+              <div className="rounded-md bg-white/10 p-3 dark:bg-white/10">
+                <p className="text-xs font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-300">
+                  Address proof
+                </p>
+                <p className="mt-1 font-semibold">
+                  {formData.addressProof
+                    ? `${formData.addressProof}${
+                        formData.addressProofType
+                          ? ` (${formData.addressProofType})`
+                          : ""
+                      }`
+                    : "Not added yet"}
+                </p>
+              </div>
+            )}
             <div className="rounded-md bg-white/10 p-3 dark:bg-white/10">
               <p className="text-xs font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-300">
                 Role

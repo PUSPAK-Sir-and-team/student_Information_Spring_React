@@ -1,0 +1,232 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Library Admin API",
+    "description": "API for managing library admin records (student information system).",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Admin",
+      "description": "Operations for managing library admins"
+    }
+  ],
+  "paths": {
+    "/library/admin/get-all-admin": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get all admin info",
+        "operationId": "getAllAdmin",
+        "responses": {
+          "200": {
+            "description": "List of all admins",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Admin" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/admin/get-admin/{id}": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get admin info by ID",
+        "operationId": "getAdminById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Admin ID",
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Admin found (empty object/null fields if not present, since backend returns an Optional)",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Admin" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/admin/save-admin": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Insert admin info",
+        "operationId": "saveAdmin",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdminInput" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Admin created successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Admin" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/admin/delete-admin/{id}": {
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Delete admin record",
+        "operationId": "deleteAdmin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Admin ID",
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Admin deleted successfully"
+          }
+        }
+      }
+    },
+    "/library/admin/update-admin/{id}": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update admin record",
+        "operationId": "updateAdmin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Admin ID",
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdminInput" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Admin updated successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Admin" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Admin": {
+        "type": "object",
+        "properties": {
+          "adminId": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Auto-generated admin ID",
+            "readOnly": true,
+            "example": 1
+          },
+          "adminName": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "phone": {
+            "type": "integer",
+            "format": "int64",
+            "example": 9876543210
+          },
+          "adminUrl": {
+            "type": "string",
+            "description": "Admin image URL",
+            "example": "https://example.com/images/admin1.jpg"
+          },
+          "address": {
+            "type": "string",
+            "example": "123 Main Street, City"
+          },
+          "addressProof": {
+            "type": "string",
+            "description": "Address proof number",
+            "example": "AB1234567"
+          },
+          "addressProofType": {
+            "type": "string",
+            "description": "Type of address proof document",
+            "example": "Aadhar Card"
+          }
+        }
+      },
+      "AdminInput": {
+        "type": "object",
+        "properties": {
+          "adminName": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "phone": {
+            "type": "integer",
+            "format": "int64",
+            "example": 9876543210
+          },
+          "adminUrl": {
+            "type": "string",
+            "example": "https://example.com/images/admin1.jpg"
+          },
+          "address": {
+            "type": "string",
+            "example": "123 Main Street, City"
+          },
+          "addressProof": {
+            "type": "string",
+            "example": "AB1234567"
+          },
+          "addressProofType": {
+            "type": "string",
+            "example": "Aadhar Card"
+          }
+        }
+      }
+    }
+  }
+}

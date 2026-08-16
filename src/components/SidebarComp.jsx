@@ -17,7 +17,7 @@ import { cn } from "../lib/utils";
 
 const navItems = [
   { to: "/list", label: "School board", icon: HiViewList },
-  { to: "/create", label: "Add student/teacher", icon: HiOutlinePlus },
+  { to: "/create", label: "Add student/teacher/admin", icon: HiOutlinePlus },
 ];
 
 const quickItems = [
@@ -159,7 +159,7 @@ export function SidebarComp({
             <div>
               <p className="text-sm font-bold">School management</p>
               <p className="text-xs text-zinc-300 dark:text-zinc-300">
-                Students and teachers
+                Students, teachers and admins
               </p>
             </div>
           </div>
