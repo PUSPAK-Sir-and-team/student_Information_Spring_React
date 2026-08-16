@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.main.admin.entity.admin;
 import com.main.admin.service.adminService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/library/admin")
 public class adminController {
